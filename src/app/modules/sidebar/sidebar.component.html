@@ -1,0 +1,21 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav  [mode]="modoBarraLateral" [opened]="mostrarBarraLateral">
+    <h5 style="background-color: white; height: 40px; display: flex; align-items: center; justify-content: center;">
+       Menú
+    </h5>
+    <mat-nav-list >
+       <button  routerLink="./listaUsuario" class="hover-orange transparent-button" [class.active]="isRouteActive('/listaUsuario')">
+       <i class="fas fa-home" style="margin-right: 35px;"></i>
+       Mi usuarios 
+       </button>
+       <button (click)="logoutBS()" class="hover-orange transparent-button" [class.active]="isRouteActive('/plan')">  
+       <i class="fas fa-sign-out-alt" style="margin-right: 35px;"></i>
+       Cerrar sesión 
+       </button>
+    </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+       <router-outlet></router-outlet>
+       <app-header></app-header>
+    </mat-sidenav-content>
+ </mat-sidenav-container>
