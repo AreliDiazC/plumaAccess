@@ -1,0 +1,70 @@
+.card-container {
+    width: 40%;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .profile-img-card {
+    width: 96px;
+    height: 96px;
+    margin: auto;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #007bff;
+  }
+  
+  .alert-success {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+
+  .body {
+    background-color: #007bff; /* Azul */
+    margin: 0; /* Elimina el margen predeterminado del cuerpo */
+  }
+  
+  .app-component {
+    height: 100vh; /* Establece la altura del componente al 100% del viewport */
+  }
+  
+  .centered-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

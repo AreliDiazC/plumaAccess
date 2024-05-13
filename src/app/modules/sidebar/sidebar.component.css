@@ -1,0 +1,87 @@
+
+.mat-sidenav-container {
+  height: 100vh;
+}
+
+/* Estilo para la barra lateral */
+.mat-sidenav {
+  width: 280px; 
+  background-color: #007bff; 
+}
+
+/* Estilo para los elementos activos del menú */
+.mat-nav-list button.active {
+  background-color: #d17600; 
+}
+
+/* Estilo para el contenido principal */
+.mat-sidenav-content {
+  padding: 20px; 
+}
+
+.texto-blanco {
+  color: white;
+}
+
+.mat-nav-list button {
+  margin-bottom: 10px;
+  color: #CCCCCC; 
+  font-size: 16px;
+  font-family: sans-serif;
+
+}
+
+.mat-nav-list button:hover {
+  color: white; 
+}
+
+/* styles.css o tu-archivo.component.css */
+.hover-orange:hover {
+  background-color: #007bff;
+  color: white; 
+  text-align: left;
+}
+
+.button-text {
+  margin-left: 10px; 
+}
+
+.mat-menu-item {
+  width: 100%;
+  text-align: left;
+  color: #ffffff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+  margin-top: 4%;
+  border-radius: 0%;
+}
+
+.transparent-button {
+  border: none;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 4%;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  padding-left: 30px; 
+  padding-top: 8px;
+  padding-bottom: 10px;
+  height: 40%;
+  
+}
+
+.transparent-button mat-icon {
+  margin-right: 10px;
+}
+
+/* En tu archivo CSS */
+.transparent-button.active {
+color: #000000; 
+background-color: rgb(255, 255, 255); 
+}
