@@ -14,27 +14,18 @@ export class AuthService {
   //Trabajar con BehaviourSubjects
   public loggedIn = new BehaviorSubject<boolean>(false);
   public role = new BehaviorSubject<string>('');
-  public userId = new BehaviorSubject<number>(0);
-  public email = new BehaviorSubject<string>('');
-  public idGym = new BehaviorSubject<number>(0);
-  public nombreGym = new BehaviorSubject<string>('');
-  public encryptedMail = new BehaviorSubject<string>(''); // Varible a utilizar en Sesion Storage
-  private readonly USER_KEY = 'olympus'; // Manejar la sesion por Sesion Storage
   usuarioRegistrado: any[] = [];
-  public ubicacion!: string;
   idUsuario:number =0;
   userRole: string = '';
 
   isConnected: boolean = true;
 
-  API: string = 'https://inmobiliaria.arvispace.com/Servicios_access_pluma/';
+  API: string = 'http://localhost/pluma/';
 
   httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private router: Router, private clienteHttp: HttpClient) {
-
   }
-
 
   loginBS(data: any): Observable<any> {
     const url = `${this.API}ser_login.php`;

@@ -1,16 +1,16 @@
 <div>
     <div class="contenedor" mat-dialog-title>
-       <label style="color: white;">Usuarios</label>
+       <label style="color: white;">Editar usuario</label>
        <i class="fas fa-times" (click)="cerrarDialogo()"></i>
     </div>
     <div mat-dialog-content>
        <br>
-       <form [formGroup]="formularioContacto" (ngSubmit)="submit()">
+       <form [formGroup]="form" (ngSubmit)="actualizar()">
        <div class="row">
           <div class="col-md-6">
              <p>Nombre completo:
                 <input type="text" formControlName="nombre" required>
-                @if(this.formularioContacto.get('nombre')?.errors?.['required']) {
+                @if(this.form.get('nombre')?.errors?.['required']) {
                 <span>(Nombre requerido)</span>
                 }
              </p>
@@ -18,13 +18,13 @@
           <div class="col-md-6">
              <p>Celular:
                 <input type="text" formControlName="celular">
-                @if(this.formularioContacto.get('celular')?.errors?.['required']) {
+                @if(this.form.get('celular')?.errors?.['required']) {
                 <span>(Celular requerido)</span>
                 }
-                @if(this.formularioContacto.get('celular')?.errors?.['minlength']) {
+                @if(this.form.get('celular')?.errors?.['minlength']) {
                 <span>(Mínimo 7 caracteres)</span>
                 }
-                @if(this.formularioContacto.get('celular')?.errors?.['maxlength']) {
+                @if(this.form.get('celular')?.errors?.['maxlength']) {
                   <span>(Maximo 10 caracteres)</span>
                   }
              </p>
@@ -36,7 +36,7 @@
                     <option [value]="usuario.id_tipo_user">{{ usuario.nombre_tipo_user }}</option>
                      }
                   </select>
-                @if(this.formularioContacto.get('tipoUsuario')?.errors?.['required']) {
+                @if(this.form.get('tipoUsuario')?.errors?.['required']) {
                 <span>(Tipo de usuario requerido)</span>
                 }
              </p>
@@ -48,7 +48,7 @@
                     <option [value]="codigo.id_code_qr">{{ codigo.identificadorQR }}</option>
                      }
                   </select>
-                @if(this.formularioContacto.get('codigoQR')?.errors?.['required']) {
+                @if(this.form.get('codigoQR')?.errors?.['required']) {
                 <span>(Codigo requerido)</span>
                 }
              </p>
@@ -58,14 +58,14 @@
          <div class="col-md-6">
                <label for="fecha">Fecha inicio:</label>
                <input type="date" class="form-control" id="fecha" formControlName="fechaInicio" (change)="onFechaChangeInicio($event)">
-               @if(this.formularioContacto.get('fechaInicio')?.errors?.['required']) {
+               @if(this.form.get('fechaInicio')?.errors?.['required']) {
                   <span>(Fecha inicio requerida)</span>
                   }
          </div>
          <div class="col-md-6">
             <label for="fecha">Fecha fin:</label>
             <input type="date" class="form-control" id="fecha" formControlName="fechaFin" (change)="onFechaChangeFin($event)">
-            @if(this.formularioContacto.get('fechaFin')?.errors?.['required']) {
+            @if(this.form.get('fechaFin')?.errors?.['required']) {
                <span>(Fecha fin requerida)</span>
                }
          </div>
@@ -73,18 +73,18 @@
        <div class="row">
          <div class="col-md-6">
             <div class="form-group">
-               <label for="hora">Hora:</label>
+               <label for="hora">Hora inicio:</label>
                <input type="time" class="form-control" id="hora" formControlName="horaInicio" (change)="onHoraChangeInicio($event)">
-               @if(this.formularioContacto.get('horaInicio')?.errors?.['required']) {
+               @if(this.form.get('horaInicio')?.errors?.['required']) {
                   <span>(Hora inicio requerida)</span>
                   }
              </div>
          </div>
          <div class="col-md-6">
             <div class="form-group">
-               <label for="hora">Hora:</label>
+               <label for="hora">Hora fin:</label>
                <input type="time" class="form-control" id="hora" formControlName="horaFin" (change)="onHoraChangeFin($event)">
-               @if(this.formularioContacto.get('horaFin')?.errors?.['required']) {
+               @if(this.form.get('horaFin')?.errors?.['required']) {
                   <span>(Hora fin requerida)</span>
                   }
              </div>
