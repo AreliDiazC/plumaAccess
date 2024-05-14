@@ -10,8 +10,8 @@ import {
   MatDialogTitle,
   MatDialogContent,
 } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {usuarioService } from '../../service/usuario.service';
+import { MatButtonModule} from '@angular/material/button';
+import { usuarioService } from '../../service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
