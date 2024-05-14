@@ -10,23 +10,24 @@
        </div>
        <br><br>
        <table class="table table-striped">
-          <thead>
-             <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Edad</th>
-                <th>Correo Electrónico</th>
-             </tr>
-          </thead>
-          <tbody>
-             <tr>
-             </tr>
-             <tr>
-             </tr>
-             <tr>
-             </tr>
-          </tbody>
+         <thead>
+           <tr>
+             <th>Nombre</th>
+             <th>Celular</th>
+             <th>Editar</th>
+           </tr>
+         </thead>
+         <tbody>
+         @for (usuario of usuarios; track usuario ){ 
+           <tr >
+             <td>{{ usuario.nombre_completo }}</td>
+             <td>{{ usuario.celular }}</td>
+             <td>
+               <i class="fas fa-pencil-alt" (click)="editar(usuario)"></i>
+             </td>
+           </tr>
+         }
+         </tbody>
        </table>
     </div>
  </div>

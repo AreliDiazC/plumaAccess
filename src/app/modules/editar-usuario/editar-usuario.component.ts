@@ -1,40 +1,55 @@
 import { Component, Inject, OnInit} from '@angular/core';
-import { MatInputModule} from '@angular/material/input';
-import { MatFormFieldModule} from '@angular/material/form-field';
-import { FormsModule} from '@angular/forms';
 import { ReactiveFormsModule, Validators, FormBuilder, FormGroup} from '@angular/forms';
-import { MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
   MatDialogTitle,
   MatDialogContent,
 } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {usuarioService } from '../../service/usuario.service';
+import { usuarioService } from '../../service/usuario.service';
+import { MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-usuario',
+  selector: 'app-editar-usuario',
   standalone: true,
-  imports: [MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule,MatDialogTitle,MatDialogContent],
-  templateUrl: './usuario.component.html',
-  styleUrl: './usuario.component.css',
-  animations: [
-  ]
+  imports: [ReactiveFormsModule,MatDialogModule, MatDialogTitle, MatDialogContent],
+  templateUrl: './editar-usuario.component.html',
+  styleUrl: './editar-usuario.component.css'
 })
-export class UsuarioComponent implements OnInit{
-  resultado!: string;
+export class EditarUsuarioComponent implements OnInit{
   horaSeleccionada: string = '';
   fechaSeleccionada: string = '';
   tipoUsuario: any;
   qr: any;
-  formularioContacto: FormGroup;
+  form: FormGroup;
+  resultadoData:  any = {};
 
-  constructor(public dialogRef: MatDialogRef<UsuarioComponent>,
-  @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb: FormBuilder, private toastr: ToastrService, private usuario:usuarioService) {
-   
-    this.formularioContacto = this.fb.group({
+  constructor(public dialogRef: MatDialogRef<EditarUsuarioComponent>,
+  @Inject(MAT_DIALOG_DATA) public data: any ,private fb: FormBuilder, private usuario:usuarioService, private toastr: ToastrService) {
+    
+
+    this.usuario.verUsuariosId(this.data.usuario).subscribe({
+      next: (resultData) => {
+      this.resultadoData = resultData;
+         this.form.setValue({
+           celular: this.resultadoData[0].celular,
+           nombre: this.resultadoData[0].nombre_completo,
+           fechaFin: this.resultadoData[0].end_date,
+           horaFin: this.resultadoData[0].end_hour,
+           codigoQR: this.resultadoData[0].fk_id_qr_code,
+           perteneceA: this.resultadoData[0].perteneceA,
+           tipoUsuario: this.resultadoData[0].fk_id_tipo_user,
+           fechaInicio: this.resultadoData[0].start_date,
+           horaInicio: this.resultadoData[0].start_hour,
+           visible: this.resultadoData[0].visible,
+           code_phone_device: this.resultadoData[0].code_phone_device,
+           p_id_user: this.resultadoData[0].id_user,
+         });
+      }
+    });
+
+    this.form = this.fb.group({
       nombre: ['', [Validators.required]],
       celular: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       tipoUsuario: ['', [Validators.required]],
@@ -46,18 +61,20 @@ export class UsuarioComponent implements OnInit{
       horaFin: ['', [Validators.required]],
       visible: ['1', [Validators.required]],
       code_phone_device: [],
+      p_id_user: [this.data.usuario],
     });
+  
   }
 
   ngOnInit(): void {
-    this.tipoUsuarios();
     this.codigoQr();
+    this.tipoUsuarios();
   }
 
-  submit() {
-    if (this.formularioContacto.valid){
-      this.usuario.agregarUsuario(this.formularioContacto.value).subscribe((respuesta)=>{
-        this.toastr.success('Usuario agregado correctamente', 'Exito', {
+  actualizar() {
+    if (this.form.valid){
+      this.usuario.actualizaUsuario(this.form.value).subscribe((respuesta)=>{
+        this.toastr.success('Usuario actualizado correctamente', 'Exito', {
           positionClass: 'toast-bottom-left',
         }); 
         this.dialogRef.close(true);
@@ -87,14 +104,14 @@ export class UsuarioComponent implements OnInit{
 
   onFechaChangeInicio(event: any) {
     this.fechaSeleccionada = event.target.value;
-    this.formularioContacto.patchValue({ 
+    this.form.patchValue({ 
       fechaInicio: this.fechaSeleccionada 
     });
   }
 
   onFechaChangeFin(event: any) {
     this.fechaSeleccionada = event.target.value;
-    this.formularioContacto.patchValue({ 
+    this.form.patchValue({ 
       fechaFin: this.fechaSeleccionada 
     });
     
@@ -102,15 +119,16 @@ export class UsuarioComponent implements OnInit{
 
   onHoraChangeFin(event: any) {
     this.horaSeleccionada = event.target.value;
-    this.formularioContacto.patchValue({ 
+    this.form.patchValue({ 
       horaFin: this.horaSeleccionada 
     });
   }
   
   onHoraChangeInicio(event: any) {
     this.horaSeleccionada = event.target.value;
-    this.formularioContacto.patchValue({ 
+    this.form.patchValue({ 
       horaInicio: this.horaSeleccionada 
     });
   }
+
 }
