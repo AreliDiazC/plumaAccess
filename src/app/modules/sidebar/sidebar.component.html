@@ -14,6 +14,12 @@
          Mi pluma 
       </button>
 
+      <button  (click)="tipoOrg()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/tipoOrg')">
+         <i class="fas fa-home" style="margin-right: 35px;"></i>
+         Tipo Organicacion
+      </button>
+      
+
        <button (click)="logoutBS()" class="hover-orange transparent-button" [class.active]="isRouteActive('/plan')">  
        <i class="fas fa-sign-out-alt" style="margin-right: 35px;"></i>
        Cerrar sesión 

@@ -77,6 +77,10 @@ export class SidebarComponent {
     this.router.navigate(["./listaUsuario"]);
   }
 
+  tipoOrg(): void {
+    this.router.navigate(["./tipoOrg"]);
+  }
+
 
   breakpointChanges(): void {
     if (this.breakpointObserver.isMatched('(max-width: 500px)')) {
