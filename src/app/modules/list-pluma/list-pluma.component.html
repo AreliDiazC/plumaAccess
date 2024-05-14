@@ -1,0 +1,33 @@
+<div class="container mt-4">
+    <div style="margin-top: 60px;">
+       <div class="row">
+          <div class="col">
+             <h2>Pluma</h2>
+          </div>
+          <div class="col-auto">
+             <button class="btn btn-primary" (click)="crearPluma()"><i class="fas fa-plus"></i>Agregar pluma</button>
+          </div>
+       </div>
+       <br><br>
+       <table class="table table-striped">
+         <thead>
+           <tr>
+             <th>Nombre</th>
+             <th>Celular</th>
+             <th>Editar</th>
+           </tr>
+         </thead>
+         <tbody>
+         @for (usuario of pluma; track usuario ){ 
+           <tr >
+             <td>{{ usuario.nombre_completo }}</td>
+             <td>{{ usuario.celular }}</td>
+             <td>
+               <i class="fas fa-pencil-alt" (click)="editar(usuario)"></i>
+             </td>
+           </tr>
+         }
+         </tbody>
+       </table>
+    </div>
+ </div>

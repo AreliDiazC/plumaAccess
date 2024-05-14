@@ -1,1 +1,37 @@
-<p>aqui</p>
+<div>
+    <div class="contenedor" mat-dialog-title>
+       <label style="color: white;">Usuarios</label>
+       <i class="fas fa-times" (click)="cerrarDialogo()"></i>
+    </div>
+    <div mat-dialog-content>
+       <br>
+       <form [formGroup]="formularioPluma" (ngSubmit)="submit()">
+       <div class="row">
+          <div class="col-md-6">
+             <p>Nombre completo:
+                <input type="text" formControlName="nombre" required>
+                @if(this.formularioPluma.get('nombre')?.errors?.['required']) {
+                <span>(Nombre requerido)</span>
+                }
+             </p>
+          </div>
+          <div class="col-md-6">
+             <p>Tipo de usuario:
+                  <select  id="tipoUsuario" formControlName="tipoUsuario">
+                     @for (usuario of tipoUsuario; track usuario){
+                    <option [value]="usuario.id_tipo_user">{{ usuario.nombre_tipo_user }}</option>
+                     }
+                  </select>
+                @if(this.formularioPluma.get('tipoUsuario')?.errors?.['required']) {
+                <span>(Tipo de usuario requerido)</span>
+                }
+             </p>
+          </div>
+       </div>
+
+       <div class="but">
+          <button type="submit">Confirmar</button>
+       </div>
+       </form>
+    </div>
+ </div>
