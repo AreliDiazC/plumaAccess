@@ -4,10 +4,16 @@
        Menú
     </h5>
     <mat-nav-list >
-       <button  routerLink="./listaUsuario" class="hover-orange transparent-button" [class.active]="isRouteActive('/listaUsuario')">
+       <button  (click)="misUsuarios()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/listaUsuario')">
        <i class="fas fa-home" style="margin-right: 35px;"></i>
        Mi usuarios 
        </button>
+
+       <button  (click)="pluma()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/pluma')">
+         <i class="fas fa-home" style="margin-right: 35px;"></i>
+         Mi pluma 
+      </button>
+
        <button (click)="logoutBS()" class="hover-orange transparent-button" [class.active]="isRouteActive('/plan')">  
        <i class="fas fa-sign-out-alt" style="margin-right: 35px;"></i>
        Cerrar sesión 

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { ListUsuarioComponent } from './modules/list-usuario/list-usuario.component';
 import { SidebarComponent } from './modules/sidebar/sidebar.component';
 import { AdminDashboardComponent } from './modules/admin-dashboard/admin-dashboard.component';
+import { PlumaComponent } from './modules/pluma/pluma.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
         component: AdminDashboardComponent,
         children: [
             { path: 'listaUsuario', component: ListUsuarioComponent},
+            { path: 'pluma', component: PlumaComponent},
         ],
     }, 
 ];

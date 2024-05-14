@@ -40,7 +40,6 @@ export class SidebarComponent {
     };
     this.mobileQuery.addListener(this._mobileQueryListener);
     
-
     this.breakpoint$.subscribe(() =>
       this.breakpointChanges()
   );
@@ -69,6 +68,15 @@ export class SidebarComponent {
   logoutBS(): void {
     this.auth.logoutBS();
   }
+
+  pluma(): void {
+    this.router.navigate(["./pluma"]);
+  }
+
+  misUsuarios(): void {
+    this.router.navigate(["./listaUsuario"]);
+  }
+
 
   breakpointChanges(): void {
     if (this.breakpointObserver.isMatched('(max-width: 500px)')) {
