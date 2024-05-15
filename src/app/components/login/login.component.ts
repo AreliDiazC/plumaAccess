@@ -53,6 +53,11 @@ export class LoginComponent {
         }else{
           this.router.navigate(['/listaUsuario']);
         }
+      },
+      error: (error: any) => {
+        console.error('Error en la solicitud:', error);
+        console.error('Respuesta del servidor:', error.error); // Imprime el cuerpo de la respuesta del servidor
+        // Manejar el error, por ejemplo, mostrando un mensaje de error al usuario
       }
     });
   }

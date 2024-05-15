@@ -9,6 +9,7 @@ import { PlumaComponent } from './modules/pluma/pluma.component';
 import { TipoOrganizacionComponent } from './modules/tipo-organizacion/tipo-organizacion.component';
 import { ListPlumaComponent } from './modules/list-pluma/list-pluma.component';
 import { ListCodigoComponent } from './modules/list-codigo/list-codigo.component';
+import { AgregarOrgComponent } from './modules/agregar-org/agregar-org.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,7 +21,8 @@ export const routes: Routes = [
             { path: 'listaUsuario', component: ListUsuarioComponent},
             { path: 'listaPluma', component: ListPlumaComponent},
             { path: 'tipoOrg', component: TipoOrganizacionComponent},
-            { path: 'listaCodigo', component: ListCodigoComponent},
+            { path: 'listaCodigo', component: ListCodigoComponent}, 
+            { path: 'listaOrganizacion', component: AgregarOrgComponent},
         ],
     }, 
 ];

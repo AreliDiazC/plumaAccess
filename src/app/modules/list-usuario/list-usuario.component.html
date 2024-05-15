@@ -18,7 +18,7 @@
            </tr>
          </thead>
          <tbody>
-         @for (usuario of usuarios; track usuario ){ 
+         @for (usuario of currentPageUsuarios; track usuario ){ 
            <tr >
              <td>{{ usuario.nombre_completo }}</td>
              <td>{{ usuario.celular }}</td>
@@ -29,5 +29,13 @@
          }
          </tbody>
        </table>
+       <div class="d-flex justify-content-between p-2">
+        <ngb-pagination
+          [collectionSize]="collectionSize"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          (pageChange)="refreshUsuario()">
+        </ngb-pagination>
+      </div>
     </div>
  </div>

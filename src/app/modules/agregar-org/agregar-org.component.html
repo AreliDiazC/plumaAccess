@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <div style="margin-top: 60px">
+    <div class="row">
+      <div class="col">
+        <h2>Mis Organizaciones</h2>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" (click)="crearOrganizacion()">
+          <i class="fas fa-plus"></i>Agregar Organización
+        </button>
+      </div>
+    </div>
+    <br /><br />
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre de la organizacion</th>
+          <th>Tipo de organizacion</th>
+          <th>Modificar</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (org of organizaciones; track org){
+        <tr>
+          <td>{{ org.nombre_organizacion }}</td>
+          <td>{{ org.nombre_tipo_organizacion }}</td>
+          <td (click)="editar(org.id_organizacion)">
+            <i class="fas fa-pencil-alt"></i>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

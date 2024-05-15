@@ -25,7 +25,6 @@ verPlumas(): Observable<any>{
 mostrarPlumas(datos:any): Observable<any>{
     const formData = new FormData();
     formData.append('id_organizacion', datos.organizacion);
-    console.log(formData, "formData");
     return this.clienteHttp.post(this.API+"ser_mostrar_plumas.php", formData);
 }
 
@@ -37,7 +36,6 @@ mostrarPlumasId(datos:any): Observable<any>{
 }
 
 agregarPluma(datos: any): Observable<any> {
-    console.log(datos, "datoooooooooooooooooos");
     const formData = new FormData();
     formData.append('p_cod_pluma', datos.codigo);
     formData.append('p_fk_id_org', datos.organizacion);
@@ -45,13 +43,10 @@ agregarPluma(datos: any): Observable<any> {
   }
 
   actualizarPluma(datos: any): Observable<any> {
-    console.log(datos, "datos");
     const formData = new FormData();
-    formData.append('p_cod_pluma', datos.codigo);
-    formData.append('p_fk_id_organizacion', datos.organizacion);
     formData.append('p_id_pluma', datos.p_id_pluma);
-    console.log(formData, "formData");
-
+    formData.append('p_codigo_pluma', datos.codigo);
+    formData.append('p_fk_id_organizacion', datos.organizacion);
     return this.clienteHttp.post<any>(this.API + "sp_update_pluma.php", formData);
 }
 }

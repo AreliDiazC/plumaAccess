@@ -18,7 +18,6 @@ verOrganizacion(): Observable<any>{
 }
 
 mostrarCodigo(datos:any): Observable<any>{
-    console.log(datos, "datosdatosdatosdatos");
     const formData = new FormData();
     formData.append('id_organizacion', datos.organizacion);
     return this.clienteHttp.post(this.API+"ser_mostrar_QR_codes.php", formData);
@@ -45,5 +44,5 @@ agregarCodigo(datos: any): Observable<any> {
     formData.append('p_identificadorQR', datos.identificador);
     formData.append('p_id_code_qr', datos.p_id_codigo);
     return this.clienteHttp.post<any>(this.API + "ser_update_code_qr.php", formData);
-}
+    }
 }

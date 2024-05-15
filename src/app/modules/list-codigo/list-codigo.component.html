@@ -31,7 +31,7 @@
            </tr>
          </thead>
          <tbody>
-         @for (codigo of codigoOr; track codigo){ 
+         @for (codigo of currentPagePluma; track codigo){ 
            <tr >
              <td>{{ codigo.codigo }}</td>
              <td>{{ codigo.identificadorQR }}</td>
@@ -42,5 +42,13 @@
          }
          </tbody>
        </table>
+       <div class="d-flex justify-content-between p-2">
+        <ngb-pagination
+          [collectionSize]="collectionSize"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          (pageChange)="refreshPluma()">
+        </ngb-pagination>
+      </div>
     </div>
  </div>

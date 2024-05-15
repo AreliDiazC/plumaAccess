@@ -8,10 +8,11 @@ import { FormsModule} from '@angular/forms';
 import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { EditarPlumaComponent } from '../editar-pluma/editar-pluma.component';
+import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-list-pluma',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule,FormsModule,MatInputModule,MatFormFieldModule],
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule,FormsModule,MatInputModule,MatFormFieldModule,NgbPaginationModule,NgbTypeaheadModule],
   templateUrl: './list-pluma.component.html',
   styleUrl: './list-pluma.component.css'
 })
@@ -20,6 +21,10 @@ export class ListPlumaComponent implements OnInit{
   organizaciones: any;
   formulariOrg: FormGroup;
   plumaOr: any;
+  currentPagePluma: any[] = [];
+  page = 1;
+	pageSize = 4;
+  collectionSize = 0;
 
   constructor(
     public dialog: MatDialog, 
@@ -33,8 +38,32 @@ export class ListPlumaComponent implements OnInit{
 
   ngOnInit(): void {
     this.verOrg();
-   
   }
+
+  verOrg(){
+    this.plumaS.verOrganizacion().subscribe((respuesta) =>{
+      this.organizaciones = respuesta;
+    })
+  }
+
+  verPlumas(){
+    this.plumaS.mostrarPlumas(this.formulariOrg.value).subscribe((respuesta) =>{
+      if(respuesta == null){
+        this.currentPagePluma = [];
+      }else{
+        this.plumaOr = respuesta;
+        this.collectionSize = this.plumaOr.length;
+        this.refreshPluma();
+      }
+    })
+  }
+
+  refreshPluma() {
+		this.currentPagePluma = this.plumaOr.map((country: any, i:any) => ({ id: i + 1, ...country })).slice(
+			(this.page - 1) * this.pageSize,
+			(this.page - 1) * this.pageSize + this.pageSize,
+		);
+	}
 
   editar(pluma: any) {
     const dialogRef = this.dialog.open(EditarPlumaComponent, {
@@ -45,6 +74,15 @@ export class ListPlumaComponent implements OnInit{
     });
   
     dialogRef.afterClosed().subscribe(result => {
+      this.plumaS.mostrarPlumas(this.formulariOrg.value).subscribe((respuesta) =>{
+        if(respuesta == null){
+          this.currentPagePluma = [];
+        }else{
+          this.plumaOr = respuesta;
+          this.collectionSize = this.plumaOr.length;
+          this.refreshPluma();
+        }
+      })
     });
   }
 
@@ -56,20 +94,15 @@ export class ListPlumaComponent implements OnInit{
     });
   
     dialogRef.afterClosed().subscribe(result => {
+      this.plumaS.mostrarPlumas(this.formulariOrg.value).subscribe((respuesta) =>{
+        if(respuesta == null){
+          this.currentPagePluma = [];
+        }else{
+          this.plumaOr = respuesta;
+          this.collectionSize = this.plumaOr.length;
+          this.refreshPluma();
+        }
+      })
     });
   }
-
-  verOrg(){
-    this.plumaS.verOrganizacion().subscribe((respuesta) =>{
-      this.organizaciones = respuesta;
-    })
-  }
-
-  verPlumas(){
-    console.log(this.formulariOrg.value);
-    this.plumaS.mostrarPlumas(this.formulariOrg.value).subscribe((respuesta) =>{
-      this.plumaOr = respuesta;
-    })
-  }
-
 }

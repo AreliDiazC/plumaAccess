@@ -9,22 +9,26 @@
        Mi usuarios 
        </button>
 
-       <button  (click)="pluma()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/listaPluma')">
-         <i class="fas fa-home" style="margin-right: 35px;"></i>
+      <button  (click)="tipoOrg()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/tipoOrg')">
+         <i class="fas fa-briefcase" style="margin-right: 35px;"></i>
+         Tipo Organicacion
+      </button>
+
+      <button  (click)="listOrganizacion()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/listaOrganizacion')">
+         <i class="fas fa-building" style="margin-right: 35px;"></i>
+         Organizaciones
+      </button>
+
+      <button  (click)="pluma()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/listaPluma')">
+         <i class="fas fa-car" style="margin-right: 35px;"></i>
          Mi pluma 
       </button>
 
       <button  (click)="listCodigo()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/listaCodigo')">
-         <i class="fas fa-home" style="margin-right: 35px;"></i>
+      <i class="fas fa-qrcode" style="margin-right: 35px;"></i>
          Codigo QR 
       </button>
-
-      <button  (click)="tipoOrg()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/tipoOrg')">
-         <i class="fas fa-home" style="margin-right: 35px;"></i>
-         Tipo Organicacion
-      </button>
       
-
        <button (click)="logoutBS()" class="hover-orange transparent-button" [class.active]="isRouteActive('/plan')">  
        <i class="fas fa-sign-out-alt" style="margin-right: 35px;"></i>
        Cerrar sesión 

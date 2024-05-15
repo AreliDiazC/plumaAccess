@@ -1,0 +1,44 @@
+<div>
+  <div class="contenedor" mat-dialog-title>
+    <label style="color: white">Modificar Organización</label>
+    <i class="fas fa-times" (click)="cerrarDialogo()"></i>
+  </div>
+  <div mat-dialog-content>
+    <br />
+    <form>
+      <div class="row" *ngFor="let daot of datos">
+        <div class="col-md-6">
+          <p>
+            Nombre de la organizacion:
+            <input
+              type="text"
+              [(ngModel)]="datos[0].nombre_organizacion"
+              required
+              name="nombre_organizacion"
+            />
+            <span>(Nombre Organización requerido)</span>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p>
+            Selecciona la organización:
+            <select
+              id="organizacion"
+              [(ngModel)]="datos[0].fk_id_tipo_organizacion"
+              name="fk_id_tipo_organizacion"
+            >
+              <option *ngFor="let org of arrayTipoOrg" [value]="org.VALUE">
+                {{ org.LABEL }}
+              </option>
+            </select>
+          </p>
+        </div>
+      </div>
+      <div class="but">
+        <button type="submit" (click)="modificarOrganizacion()">
+          Confirmar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

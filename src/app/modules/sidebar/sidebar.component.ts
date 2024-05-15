@@ -95,4 +95,10 @@ export class SidebarComponent {
       this.mdcBackdrop = false;
     }
   }
+
+  listOrganizacion(): void {
+    this.router.navigate(["./listaOrganizacion"]);
+  }
+
+  
 }
