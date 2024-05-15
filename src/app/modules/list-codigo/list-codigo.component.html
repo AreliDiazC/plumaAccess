@@ -2,10 +2,10 @@
     <div style="margin-top: 60px;">
        <div class="row">
           <div class="col">
-             <h2>Pluma</h2>
+             <h2>Codigo QR</h2>
           </div>
           <div class="col-auto">
-             <button class="btn btn-primary" (click)="crearPluma()"><i class="fas fa-plus"></i>Agregar pluma</button>
+             <button class="btn btn-primary" (click)="crearPluma()"><i class="fas fa-plus"></i>Agregar un codigo QR</button>
           </div>
        </div>
        <br><br>
@@ -13,7 +13,7 @@
 
        <form [formGroup]="formulariOrg">
        <p>Selecciona la organización:
-        <select  id="organizacion" formControlName="organizacion" (change)="verPlumas()">
+        <select  id="organizacion" formControlName="organizacion" (change)="verCodigo()">
            @for (org of organizaciones; track org){
           <option [value]="org.id_organizacion">{{ org.nombre_organizacion }}</option>
            }
@@ -31,12 +31,12 @@
            </tr>
          </thead>
          <tbody>
-         @for (pluma of plumaOr; track pluma ){ 
+         @for (codigo of codigoOr; track codigo){ 
            <tr >
-             <td>{{ pluma.codigo_pluma }}</td>
-             <td>{{ pluma.nombre_organizacion }}</td>
+             <td>{{ codigo.codigo }}</td>
+             <td>{{ codigo.identificadorQR }}</td>
              <td>
-               <i class="fas fa-pencil-alt" (click)="editar(pluma)"></i>
+               <i class="fas fa-pencil-alt" (click)="editar(codigo)"></i>
              </td>
            </tr>
          }

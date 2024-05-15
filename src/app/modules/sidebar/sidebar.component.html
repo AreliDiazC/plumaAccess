@@ -9,9 +9,14 @@
        Mi usuarios 
        </button>
 
-       <button  (click)="pluma()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/pluma')">
+       <button  (click)="pluma()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/listaPluma')">
          <i class="fas fa-home" style="margin-right: 35px;"></i>
          Mi pluma 
+      </button>
+
+      <button  (click)="listCodigo()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/listaCodigo')">
+         <i class="fas fa-home" style="margin-right: 35px;"></i>
+         Codigo QR 
       </button>
 
       <button  (click)="tipoOrg()"  class="hover-orange transparent-button" [class.active]="isRouteActive('/tipoOrg')">

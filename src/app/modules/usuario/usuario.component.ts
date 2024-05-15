@@ -9,15 +9,17 @@ import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
   MatDialogContent,
+  MatDialogActions
 } from '@angular/material/dialog';
 import { MatButtonModule} from '@angular/material/button';
 import { usuarioService } from '../../service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',
   standalone: true,
-  imports: [MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule,MatDialogTitle,MatDialogContent],
+  imports: [MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule,MatDialogTitle,MatDialogContent, MatDialogActions],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.css',
   animations: [
@@ -25,8 +27,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UsuarioComponent implements OnInit{
   resultado!: string;
-  horaSeleccionada: string = '';
-  fechaSeleccionada: string = '';
+  horaSeleccionadaI: string = '';
+  horaSeleccionadaF: string = '';
+  fechaSeleccionadaI: string = '';
+  fechaSeleccionadaF: string = '';
   tipoUsuario: any;
   qr: any;
   formularioContacto: FormGroup;
@@ -35,8 +39,8 @@ export class UsuarioComponent implements OnInit{
   @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb: FormBuilder, private toastr: ToastrService, private usuario:usuarioService) {
    
     this.formularioContacto = this.fb.group({
-      nombre: ['', [Validators.required]],
-      celular: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      nombre:  ['', Validators.compose([ Validators.required, Validators.pattern(/^[A-Za-zñÑáéíóú ]*[A-Za-z][A-Za-zñÑáéíóú ]*$/)])],
+      celular: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(10),  Validators.pattern(/^(0|[1-9][0-9]*)$/)])],
       tipoUsuario: ['', [Validators.required]],
       codigoQR: ['', [Validators.required]],
       perteneceA: [116, [Validators.required]],
@@ -55,19 +59,34 @@ export class UsuarioComponent implements OnInit{
   }
 
   submit() {
-    if (this.formularioContacto.valid){
-      this.usuario.agregarUsuario(this.formularioContacto.value).subscribe((respuesta)=>{
-        this.toastr.success('Usuario agregado correctamente', 'Exito', {
-          positionClass: 'toast-bottom-left',
-        }); 
-        this.dialogRef.close(true);
-      })
-    }else{
-      this.toastr.warning('Complete los campos requeridos', 'Error', {
+    if (this.formularioContacto.valid) {
+      this.usuario.agregarUsuario(this.formularioContacto.value).subscribe({
+        next: (respuesta) => {
+          Swal.fire({
+            title: '¡Registro Exitoso!',
+            icon: 'success',
+            text: 'Datos ingresados exitosamente',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          Swal.fire({
+            title: '¡Oops..!',
+            icon: 'error',
+            text: 'Hubo un error al querer registrar',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        }
+      });
+    } else {
+      this.toastr.error('Complete los campos requeridos', 'Error', {
         positionClass: 'toast-bottom-left',
-      }); 
+      });
     }
   }
+  
 
   cerrarDialogo(){
     this.dialogRef.close(true);
@@ -86,31 +105,31 @@ export class UsuarioComponent implements OnInit{
   }
 
   onFechaChangeInicio(event: any) {
-    this.fechaSeleccionada = event.target.value;
+    this.fechaSeleccionadaI = event.target.value;
     this.formularioContacto.patchValue({ 
-      fechaInicio: this.fechaSeleccionada 
+      fechaInicio: this.fechaSeleccionadaI 
     });
   }
 
   onFechaChangeFin(event: any) {
-    this.fechaSeleccionada = event.target.value;
+    this.fechaSeleccionadaF = event.target.value;
     this.formularioContacto.patchValue({ 
-      fechaFin: this.fechaSeleccionada 
+      fechaFin: this.fechaSeleccionadaF
     });
     
   }
 
   onHoraChangeFin(event: any) {
-    this.horaSeleccionada = event.target.value;
+    this.horaSeleccionadaF = event.target.value;
     this.formularioContacto.patchValue({ 
-      horaFin: this.horaSeleccionada 
+      horaFin: this.horaSeleccionadaF
     });
   }
   
   onHoraChangeInicio(event: any) {
-    this.horaSeleccionada = event.target.value;
+    this.horaSeleccionadaI = event.target.value;
     this.formularioContacto.patchValue({ 
-      horaInicio: this.horaSeleccionada 
+      horaInicio: this.horaSeleccionadaI
     });
   }
 }

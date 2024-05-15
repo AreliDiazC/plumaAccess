@@ -9,7 +9,7 @@ import {
 import { usuarioService } from '../../service/usuario.service';
 import { MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-editar-usuario',
   standalone: true,
@@ -18,17 +18,17 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './editar-usuario.component.css'
 })
 export class EditarUsuarioComponent implements OnInit{
-  horaSeleccionada: string = '';
-  fechaSeleccionada: string = '';
-  tipoUsuario: any;
+  horaSeleccionadaF: string = '';
+  fechaSeleccionadaF: string = '';
+  horaSeleccionadaI: string = '';
+  fechaSeleccionadaI: string = '';
+  tipoUsuarioos: any;
   qr: any;
   form: FormGroup;
   resultadoData:  any = {};
 
   constructor(public dialogRef: MatDialogRef<EditarUsuarioComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any ,private fb: FormBuilder, private usuario:usuarioService, private toastr: ToastrService) {
-    
-
     this.usuario.verUsuariosId(this.data.usuario).subscribe({
       next: (resultData) => {
       this.resultadoData = resultData;
@@ -50,8 +50,8 @@ export class EditarUsuarioComponent implements OnInit{
     });
 
     this.form = this.fb.group({
-      nombre: ['', [Validators.required]],
-      celular: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      nombre:  ['', Validators.compose([ Validators.required, Validators.pattern(/^[A-Za-zñÑáéíóú ]*[A-Za-z][A-Za-zñÑáéíóú ]*$/)])],
+      celular: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(10),  Validators.pattern(/^(0|[1-9][0-9]*)$/)])],
       tipoUsuario: ['', [Validators.required]],
       codigoQR: ['', [Validators.required]],
       perteneceA: [116, [Validators.required]],
@@ -74,9 +74,12 @@ export class EditarUsuarioComponent implements OnInit{
   actualizar() {
     if (this.form.valid){
       this.usuario.actualizaUsuario(this.form.value).subscribe((respuesta)=>{
-        this.toastr.success('Usuario actualizado correctamente', 'Exito', {
-          positionClass: 'toast-bottom-left',
-        }); 
+        Swal.fire({
+          title: '¡Registro actualizado con exito!',
+          icon: 'success',
+          text: 'Datos ingresados exitosamente',
+          timer: 2000
+        });
         this.dialogRef.close(true);
       })
     }else{
@@ -92,7 +95,7 @@ export class EditarUsuarioComponent implements OnInit{
 
   tipoUsuarios(){
     this.usuario.tipoUsuario().subscribe((respuesta) =>{
-      this.tipoUsuario = respuesta;
+      this.tipoUsuarioos = respuesta;
     })
   }
 
@@ -103,31 +106,31 @@ export class EditarUsuarioComponent implements OnInit{
   }
 
   onFechaChangeInicio(event: any) {
-    this.fechaSeleccionada = event.target.value;
+    this.fechaSeleccionadaI = event.target.value;
     this.form.patchValue({ 
-      fechaInicio: this.fechaSeleccionada 
+      fechaInicio: this.fechaSeleccionadaI 
     });
   }
 
   onFechaChangeFin(event: any) {
-    this.fechaSeleccionada = event.target.value;
+    this.fechaSeleccionadaF = event.target.value;
     this.form.patchValue({ 
-      fechaFin: this.fechaSeleccionada 
+      fechaFin: this.fechaSeleccionadaF 
     });
     
   }
 
   onHoraChangeFin(event: any) {
-    this.horaSeleccionada = event.target.value;
+    this.horaSeleccionadaF = event.target.value;
     this.form.patchValue({ 
-      horaFin: this.horaSeleccionada 
+      horaFin: this.horaSeleccionadaF
     });
   }
   
   onHoraChangeInicio(event: any) {
-    this.horaSeleccionada = event.target.value;
+    this.horaSeleccionadaI = event.target.value;
     this.form.patchValue({ 
-      horaInicio: this.horaSeleccionada 
+      horaInicio: this.horaSeleccionadaI
     });
   }
 

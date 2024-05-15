@@ -13,26 +13,29 @@ import { ToastrService } from 'ngx-toastr';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule} from '@angular/material/button';
 import { plumaService } from '../../service/pluma.service';
+import { codigoService } from '../../service/codigo.service';
 
 @Component({
-  selector: 'app-pluma',
+  selector: 'app-codigo',
   standalone: true,
   imports: [MatDialogModule, ReactiveFormsModule, FormsModule, MatInputModule, MatFormFieldModule,MatButtonModule],
-  templateUrl: './pluma.component.html',
-  styleUrl: './pluma.component.css'
+  templateUrl: './codigo.component.html',
+  styleUrl: './codigo.component.css'
 })
-export class PlumaComponent implements OnInit{
+export class CodigoComponent {
 
+  
   formularioPluma: FormGroup;
   tipoUsuario: any;
-  organizaciones: any;
+  plumas: any;
 
-  constructor(public dialogRef: MatDialogRef<PlumaComponent>,
-    @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb: FormBuilder, private toastr: ToastrService, private pluma: plumaService) {
+  constructor(public dialogRef: MatDialogRef<CodigoComponent>,
+    @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb: FormBuilder, private toastr: ToastrService, private pluma: plumaService, private codigo: codigoService) {
      
       this.formularioPluma = this.fb.group({
         codigo: ['', [Validators.required]],
-        organizacion: ['', [Validators.required]],
+        idPluma: ['', [Validators.required]],
+        identificador: ['', [Validators.required]],
       });
     }
 
@@ -47,14 +50,16 @@ export class PlumaComponent implements OnInit{
   }
 
   verOrg(){
-  this.pluma.verOrganizacion().subscribe((respuesta) =>{
-    this.organizaciones = respuesta;
+  this.pluma.verPlumas().subscribe((respuesta) =>{
+    console.log(respuesta, "respuesta");
+    this.plumas = respuesta;
   })
 }
   
 submit() {
     if (this.formularioPluma.valid){
-      this.pluma.agregarPluma(this.formularioPluma.value).subscribe((respuesta)=>{
+      this.codigo.agregarCodigo(this.formularioPluma.value).subscribe((respuesta)=>{
+        console.log(respuesta, "respuesta");
         this.toastr.success('Usuario agregado correctamente', 'Exito', {
           positionClass: 'toast-bottom-left',
         }); 
