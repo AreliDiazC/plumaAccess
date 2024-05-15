@@ -36,7 +36,6 @@ tipoUsuario(): Observable<any>{
 }
 
 agregarUsuario(datos: any): Observable<any>{
-    console.log(datos, "datoooooooooooooooooos");
     const formData = new FormData();
     formData.append('p_nombre_completo', datos.nombre);
     formData.append('p_celular', datos.celular);

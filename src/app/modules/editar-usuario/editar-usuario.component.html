@@ -13,11 +13,14 @@
                 @if(this.form.get('nombre')?.errors?.['required']) {
                 <span>(Nombre requerido)</span>
                 }
+                @if(this.form.get('nombre')?.errors?.['pattern']) {
+                  <span>(Carácter invalido)</span>
+               }
              </p>
           </div>
           <div class="col-md-6">
              <p>Celular:
-                <input type="text" formControlName="celular">
+                <input type="text" formControlName="celular" maxlength="10">
                 @if(this.form.get('celular')?.errors?.['required']) {
                 <span>(Celular requerido)</span>
                 }
@@ -27,12 +30,15 @@
                 @if(this.form.get('celular')?.errors?.['maxlength']) {
                   <span>(Maximo 10 caracteres)</span>
                   }
+                  @if(this.form.get('celular')?.errors?.['pattern']) {
+                     <span>(Carácter invalido, solo numeros)</span>
+                     }
              </p>
           </div>
           <div class="col-md-6">
              <p>Tipo de usuario:
                   <select  id="tipoUsuario" formControlName="tipoUsuario">
-                     @for (usuario of tipoUsuario; track usuario){
+                     @for (usuario of tipoUsuarioos; track usuario){
                     <option [value]="usuario.id_tipo_user">{{ usuario.nombre_tipo_user }}</option>
                      }
                   </select>
@@ -42,14 +48,14 @@
              </p>
           </div>
           <div class="col-md-6">
-             <p>Codigo qr:
+             <p>Código qr:
                   <select  id="codigoQR" formControlName="codigoQR">
                      @for (codigo of qr; track codigo){
                     <option [value]="codigo.id_code_qr">{{ codigo.identificadorQR }}</option>
                      }
                   </select>
                 @if(this.form.get('codigoQR')?.errors?.['required']) {
-                <span>(Codigo requerido)</span>
+                <span>(Código requerido)</span>
                 }
              </p>
           </div>
@@ -70,6 +76,7 @@
                }
          </div>
        </div>
+       <br>
        <div class="row">
          <div class="col-md-6">
             <div class="form-group">

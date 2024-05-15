@@ -1,6 +1,6 @@
 <div>
     <div class="contenedor" mat-dialog-title>
-       <label style="color: white;">Usuarios</label>
+       <label style="color: white;">AGREGAR USUARIO</label>
        <i class="fas fa-times" (click)="cerrarDialogo()"></i>
     </div>
     <div mat-dialog-content>
@@ -13,11 +13,15 @@
                 @if(this.formularioContacto.get('nombre')?.errors?.['required']) {
                 <span>(Nombre requerido)</span>
                 }
+                @if(this.formularioContacto.get('nombre')?.errors?.['pattern']) {
+                  <span>(Carácter invalido)</span>
+               }
+               
              </p>
           </div>
           <div class="col-md-6">
              <p>Celular:
-                <input type="text" formControlName="celular">
+                <input type="text" formControlName="celular" maxlength="10">
                 @if(this.formularioContacto.get('celular')?.errors?.['required']) {
                 <span>(Celular requerido)</span>
                 }
@@ -27,6 +31,9 @@
                 @if(this.formularioContacto.get('celular')?.errors?.['maxlength']) {
                   <span>(Maximo 10 caracteres)</span>
                   }
+                  @if(this.formularioContacto.get('celular')?.errors?.['pattern']) {
+                     <span>(Carácter invalido, solo numeros)</span>
+                     }
              </p>
           </div>
           <div class="col-md-6">
@@ -42,14 +49,14 @@
              </p>
           </div>
           <div class="col-md-6">
-             <p>Codigo qr:
+             <p>Código QR:
                   <select  id="codigoQR" formControlName="codigoQR">
                      @for (codigo of qr; track codigo){
                     <option [value]="codigo.id_code_qr">{{ codigo.identificadorQR }}</option>
                      }
                   </select>
                 @if(this.formularioContacto.get('codigoQR')?.errors?.['required']) {
-                <span>(Codigo requerido)</span>
+                <span>(Código requerido)</span>
                 }
              </p>
           </div>
@@ -70,10 +77,11 @@
                }
          </div>
        </div>
+       <br>
        <div class="row">
          <div class="col-md-6">
             <div class="form-group">
-               <label for="hora">Hora:</label>
+               <label for="hora">Hora inicio:</label>
                <input type="time" class="form-control" id="hora" formControlName="horaInicio" (change)="onHoraChangeInicio($event)">
                @if(this.formularioContacto.get('horaInicio')?.errors?.['required']) {
                   <span>(Hora inicio requerida)</span>
@@ -82,7 +90,7 @@
          </div>
          <div class="col-md-6">
             <div class="form-group">
-               <label for="hora">Hora:</label>
+               <label for="hora">Hora fin:</label>
                <input type="time" class="form-control" id="hora" formControlName="horaFin" (change)="onHoraChangeFin($event)">
                @if(this.formularioContacto.get('horaFin')?.errors?.['required']) {
                   <span>(Hora fin requerida)</span>

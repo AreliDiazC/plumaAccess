@@ -15,6 +15,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { MatSidenav } from '@angular/material/sidenav';
 
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -70,7 +71,7 @@ export class SidebarComponent {
   }
 
   pluma(): void {
-    this.router.navigate(["./pluma"]);
+    this.router.navigate(["./listaPluma"]);
   }
 
   misUsuarios(): void {
@@ -81,6 +82,9 @@ export class SidebarComponent {
     this.router.navigate(["./tipoOrg"]);
   }
 
+  listCodigo(): void {
+    this.router.navigate(["./listaCodigo"]);
+  }
 
   breakpointChanges(): void {
     if (this.breakpointObserver.isMatched('(max-width: 500px)')) {

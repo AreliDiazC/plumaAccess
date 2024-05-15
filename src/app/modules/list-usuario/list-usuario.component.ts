@@ -6,14 +6,17 @@ import { usuarioService } from '../../service/usuario.service';
 import { EditarUsuarioComponent } from '../editar-usuario/editar-usuario.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { MatIcon } from '@angular/material/icon';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-list-usuario',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, PaginationModule, MatIcon],
+  imports: [MatButtonModule, MatDialogModule, PaginationModule, MatIcon, NgbPaginationModule],
   templateUrl: './list-usuario.component.html',
   styleUrl: './list-usuario.component.css'
 })
 export class ListUsuarioComponent implements OnInit{
+  
   usuarios: any;
   currentPage = 1;
   itemsPerPage = 5; 
@@ -36,6 +39,9 @@ export class ListUsuarioComponent implements OnInit{
     });
   
     dialogRef.afterClosed().subscribe(result => {
+      this.usuario.verUsuarios(116).subscribe((respuesta) => {
+        this.usuarios = respuesta;
+      });
     });
   }
 
@@ -54,7 +60,9 @@ export class ListUsuarioComponent implements OnInit{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // Aquí puedes manejar cualquier resultado que recibas después de que se cierre el diálogo
+      this.usuario.verUsuarios(116).subscribe((respuesta) => {
+        this.usuarios = respuesta;
+      });
     });
   }
   

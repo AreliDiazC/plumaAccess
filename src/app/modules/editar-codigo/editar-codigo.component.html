@@ -1,0 +1,47 @@
+<div>
+    <div class="contenedor" mat-dialog-title>
+       <label style="color: white;">CÓDIGO QR</label>
+       <i class="fas fa-times" (click)="cerrarDialogo()"></i>
+    </div>
+    <div mat-dialog-content>
+       <br>
+       <form [formGroup]="formularioPluma" (ngSubmit)="actualizar()">
+       <div class="row">
+        <div class="col-md-12">
+            <p>Codigo:
+                <input type="text" formControlName="codigo" required>
+                @if(this.formularioPluma.get('codigo')?.errors?.['required']) {
+                <span>(Codigo requerido)</span>
+                }
+             </p>
+
+        </div>
+          <div class="col-md-6">
+            <p>Identificador QR:
+                <input type="text" formControlName="identificador" required>
+                @if(this.formularioPluma.get('identificador')?.errors?.['required']) {
+                <span>(Codigo requerido)</span>
+                }
+             </p>
+            
+          </div>
+          <div class="col-md-6">
+             <p>Organización:
+                  <select  id="idPluma" formControlName="idPluma">
+                     @for (pluma of plumas; track pluma){
+                    <option [value]="pluma.id_pluma">{{ pluma.codigo_pluma }}</option>
+                     }
+                  </select>
+                @if(this.formularioPluma.get('idPluma')?.errors?.['required']) {
+                <span>(Organización requerida)</span>
+                }
+             </p>
+          </div>
+       </div>
+
+       <div class="but">
+          <button type="submit">Confirmar</button>
+       </div>
+       </form>
+    </div>
+ </div>
