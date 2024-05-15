@@ -14,7 +14,7 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule} from '@angular/material/button';
 import { plumaService } from '../../service/pluma.service';
 import { codigoService } from '../../service/codigo.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-editar-codigo',
   standalone: true,
@@ -33,7 +33,6 @@ export class EditarCodigoComponent {
       this.codigo.mostrarCodigoId(this.data.codigo).subscribe({
         next: (resultData) => {
         this.resultadoData = resultData;
-        console.log(resultData, "resultData");
            this.formularioPluma.setValue({
             codigo: this.resultadoData[0].codigo,
             idPluma: this.resultadoData[0].fk_id_pluma,
@@ -53,13 +52,28 @@ export class EditarCodigoComponent {
 
   actualizar(){
     if (this.formularioPluma.valid){
-      this.codigo.actualizarCodigo(this.formularioPluma.value).subscribe((respuesta)=>{
-        this.toastr.success('Usuario actualizado correctamente', 'Exito', {
-          positionClass: 'toast-bottom-left',
-        }); 
-        this.dialogRef.close(true);
-      })
-    }else{
+      this.codigo.actualizarCodigo(this.formularioPluma.value).subscribe({
+        next: (respuesta) => {
+          Swal.fire({
+            title: '¡Registro actualizado con exito!',
+            icon: 'success',
+            text: 'Datos ingresados exitosamente',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          Swal.fire({
+            title: '¡Oops..!',
+            icon: 'error',
+            text: 'Hubo un error al querer registrar',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        }
+      });
+    }
+    else{
       this.toastr.warning('Complete los campos requeridos', 'Error', {
         positionClass: 'toast-bottom-left',
       }); 
@@ -77,7 +91,6 @@ export class EditarCodigoComponent {
 
   verPluma(){
     this.pluma.verPlumas().subscribe((respuesta) =>{
-      console.log(respuesta, "respuesta");
       this.plumas = respuesta;
     })
   }

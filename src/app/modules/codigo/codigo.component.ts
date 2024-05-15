@@ -14,7 +14,7 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule} from '@angular/material/button';
 import { plumaService } from '../../service/pluma.service';
 import { codigoService } from '../../service/codigo.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-codigo',
   standalone: true,
@@ -24,7 +24,6 @@ import { codigoService } from '../../service/codigo.service';
 })
 export class CodigoComponent {
 
-  
   formularioPluma: FormGroup;
   tipoUsuario: any;
   plumas: any;
@@ -51,20 +50,32 @@ export class CodigoComponent {
 
   verOrg(){
   this.pluma.verPlumas().subscribe((respuesta) =>{
-    console.log(respuesta, "respuesta");
     this.plumas = respuesta;
   })
 }
   
 submit() {
     if (this.formularioPluma.valid){
-      this.codigo.agregarCodigo(this.formularioPluma.value).subscribe((respuesta)=>{
-        console.log(respuesta, "respuesta");
-        this.toastr.success('Usuario agregado correctamente', 'Exito', {
-          positionClass: 'toast-bottom-left',
-        }); 
-        this.dialogRef.close(true);
-      })
+      this.codigo.agregarCodigo(this.formularioPluma.value).subscribe({
+        next: (respuesta) => {
+          Swal.fire({
+            title: '¡Registro Exitoso!',
+            icon: 'success',
+            text: 'Datos ingresados exitosamente',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          Swal.fire({
+            title: '¡Oops..!',
+            icon: 'error',
+            text: 'Hubo un error al querer registrar',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        }
+      });
     }else{
       this.toastr.warning('Complete los campos requeridos', 'Error', {
         positionClass: 'toast-bottom-left',

@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule} from '@angular/material/button';
 import { plumaService } from '../../service/pluma.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pluma',
@@ -54,16 +55,30 @@ export class PlumaComponent implements OnInit{
   
 submit() {
     if (this.formularioPluma.valid){
-      this.pluma.agregarPluma(this.formularioPluma.value).subscribe((respuesta)=>{
-        this.toastr.success('Usuario agregado correctamente', 'Exito', {
-          positionClass: 'toast-bottom-left',
-        }); 
-        this.dialogRef.close(true);
-      })
+      this.pluma.agregarPluma(this.formularioPluma.value).subscribe({
+        next: (respuesta) => {
+          Swal.fire({
+            title: '¡Registro Exitoso!',
+            icon: 'success',
+            text: 'Datos ingresados exitosamente',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          Swal.fire({
+            title: '¡Oops..!',
+            icon: 'error',
+            text: 'Hubo un error al querer registrar',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        }
+      });
     }else{
-      this.toastr.warning('Complete los campos requeridos', 'Error', {
+      this.toastr.error('Complete los campos requeridos', 'Error', {
         positionClass: 'toast-bottom-left',
-      }); 
+    }); 
   }
 }
   

@@ -41,7 +41,6 @@ export class AuthService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.log(error, "error");
     let errorMessage = 'Error desconocido';
     if (error.error instanceof ErrorEvent) {
       // Error del lado del cliente
@@ -103,5 +102,37 @@ isSupadmin():boolean {
 getRole(): string {
   return this.role.getValue();
 }
+
+
+
+
+
+
+//servicios pantallas organizacion
+mostrarOrganizacion() {
+  let headers: any = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  return this.clienteHttp.post(this.API + 'ser_mostrar_organizaciones.php', { headers });
+}
+LovTipoUsers(seleccionado: String) {
+  let headers: any = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  let params = 'seleccionado=' + seleccionado;
+  return this.clienteHttp.post(this.API + 'se_LOV_tipo_user.php', params, { headers });
+}
+insertar_org(nombre_organizacion: any, id_tipo_organizacion: any) {
+  let headers: any = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  let params = 'nombre_org=' + nombre_organizacion + '&fk_id_tipo_org=' + id_tipo_organizacion;
+  return this.clienteHttp.post(this.API + 'ser_insertar_organizacion.php', params, { headers });
+}
+mostrarOrganizacionForID(id_organizacion: any) {
+  let headers: any = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  let params = 'id_organizacion=' + id_organizacion;
+  return this.clienteHttp.post(this.API + 'ser_mos_org_for_ID.php', params, { headers });
+}
+actualizar_organizacion(id_organizacion: any, nombre_organizacion: any, id_tipo_organizacion: any) {
+  let headers: any = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  let params = 'idOrg=' + id_organizacion + '&nombre=' + nombre_organizacion + '&fktipoOrg=' + id_tipo_organizacion;
+  return this.clienteHttp.post(this.API + 'ser_update_organizacion.php', params, { headers });
+}
+
 
 }

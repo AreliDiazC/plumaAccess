@@ -6,20 +6,21 @@ import { usuarioService } from '../../service/usuario.service';
 import { EditarUsuarioComponent } from '../editar-usuario/editar-usuario.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { MatIcon } from '@angular/material/icon';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-list-usuario',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, PaginationModule, MatIcon, NgbPaginationModule],
+  imports: [MatButtonModule, MatDialogModule, PaginationModule, MatIcon, NgbPaginationModule, NgbTypeaheadModule],
   templateUrl: './list-usuario.component.html',
   styleUrl: './list-usuario.component.css'
 })
 export class ListUsuarioComponent implements OnInit{
   
-  usuarios: any;
-  currentPage = 1;
-  itemsPerPage = 5; 
+  usuarios: any; 
+  page = 1;
+	pageSize = 4;
+  collectionSize = 0;
+  currentPageUsuarios: any[] = [];
 
   constructor(
     public dialog: MatDialog, 
@@ -31,23 +32,33 @@ export class ListUsuarioComponent implements OnInit{
     this.verUsuario();
   }
 
+  verUsuario() {
+    this.usuario.verUsuarios(116).subscribe((respuesta) => {
+      this.usuarios = respuesta;
+      this.collectionSize = this.usuarios.length;
+      this.refreshUsuario();
+    });
+  }
+
+  refreshUsuario() {
+		this.currentPageUsuarios = this.usuarios.map((country: any, i:any) => ({ id: i + 1, ...country })).slice(
+			(this.page - 1) * this.pageSize,
+			(this.page - 1) * this.pageSize + this.pageSize,
+		);
+	}
+
   crearUsuario() {
     const dialogRef = this.dialog.open(UsuarioComponent, {
       width: '60%', 
       height: '80%', 
       disableClose: true, 
     });
-  
     dialogRef.afterClosed().subscribe(result => {
       this.usuario.verUsuarios(116).subscribe((respuesta) => {
         this.usuarios = respuesta;
+        this.collectionSize = this.usuarios.length;
+        this.refreshUsuario();
       });
-    });
-  }
-
-  verUsuario() {
-    this.usuario.verUsuarios(116).subscribe((respuesta) => {
-      this.usuarios = respuesta;
     });
   }
 
@@ -58,10 +69,11 @@ export class ListUsuarioComponent implements OnInit{
       disableClose: true,
       data: { usuario: usuario.id_user }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       this.usuario.verUsuarios(116).subscribe((respuesta) => {
         this.usuarios = respuesta;
+        this.collectionSize = this.usuarios.length;
+        this.refreshUsuario();
       });
     });
   }
