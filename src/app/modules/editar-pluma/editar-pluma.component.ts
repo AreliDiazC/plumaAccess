@@ -11,7 +11,6 @@ import { MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { plumaService } from '../../service/pluma.service';
 import Swal from 'sweetalert2';
-
 @Component({
   selector: 'app-editar-pluma',
   standalone: true,
@@ -29,7 +28,6 @@ export class EditarPlumaComponent {
   @Inject(MAT_DIALOG_DATA) public data: any, private pluma: plumaService, private fb: FormBuilder, private usuario:usuarioService, private toastr: ToastrService) {
     this.pluma.mostrarPlumasId(this.data.pluma).subscribe({
       next: (resultData) => {
-      
       this.resultadoData = resultData;
          this.formularioPluma.setValue({
           codigo: this.resultadoData[0].codigo_pluma,
@@ -44,7 +42,6 @@ export class EditarPlumaComponent {
       organizacion: ['', [Validators.required]],
       p_id_pluma: [this.data.pluma]
     });
-  
   }
 
   ngOnInit(): void {

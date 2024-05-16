@@ -9,7 +9,6 @@ import {
 } from '@angular/material/dialog';
 import { MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { ReactiveFormsModule, Validators, FormBuilder, FormGroup} from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule} from '@angular/material/button';
 import { codigoService } from '../../service/codigo.service';
@@ -17,7 +16,6 @@ import { CodigoComponent } from '../codigo/codigo.component';
 import { EditarCodigoComponent } from '../editar-codigo/editar-codigo.component';
 import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { MostrarQrComponent } from '../mostrar-qr/mostrar-qr.component';
-
 @Component({
   selector: 'app-list-codigo',
   standalone: true,
@@ -125,7 +123,6 @@ export class ListCodigoComponent {
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
-
     });
   }
 

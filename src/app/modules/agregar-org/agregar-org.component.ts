@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AgregaOrganizacionInsertComponent } from '../agrega-organizacion-insert/agrega-organizacion-insert.component';
 import { UpdateOrganizacionComponent } from '../update-organizacion/update-organizacion.component';
-import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-agregar-org',
   standalone: true,

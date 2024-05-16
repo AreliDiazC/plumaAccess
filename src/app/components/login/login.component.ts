@@ -5,9 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -18,11 +16,6 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-
-  form: any = {
-    username: null,
-    password: null
-  };
 
   constructor(
     private auth: AuthService,
@@ -44,7 +37,6 @@ export class LoginComponent {
       }
     }
   }
-  
 
   reloadPage(): void {
     window.location.reload();
@@ -67,8 +59,7 @@ export class LoginComponent {
       },
       error: (error: any) => {
         console.error('Error en la solicitud:', error);
-        console.error('Respuesta del servidor:', error.error); // Imprime el cuerpo de la respuesta del servidor
-        // Manejar el error, por ejemplo, mostrando un mensaje de error al usuario
+        console.error('Respuesta del servidor:', error.error);
       }
     });
   }
