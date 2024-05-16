@@ -17,7 +17,6 @@ export class MostrarQrComponent {
   constructor(
     private http: AuthService,
     public dialogRef: MatDialogRef<MostrarQrComponent>,) {
-
   }
 
   ngOnInit() {

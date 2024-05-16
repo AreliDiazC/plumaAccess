@@ -106,7 +106,6 @@ export class EditarCodigoComponent {
   generarCodigoAleatorio(): string {
     const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const longitud = 20;
-  
     let codigo = '';
   
     // Obtener la fecha actual
@@ -117,8 +116,7 @@ export class EditarCodigoComponent {
   
     // Agregar la fecha al código
     codigo += `${dia}${mes}${año}`;
-  
-    // Generar caracteres aleatorios
+
     for (let i = 0; i < longitud - 8; i++) {
       const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
       codigo += caracteres.charAt(indiceAleatorio);

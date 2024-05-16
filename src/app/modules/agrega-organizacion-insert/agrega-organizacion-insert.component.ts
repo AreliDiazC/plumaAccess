@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -13,8 +13,6 @@ import {
 } from '@angular/material/dialog';
 import { AuthService } from '../../service/auth.service';
 import { MatButtonModule } from '@angular/material/button';
-import { time } from 'console';
-
 @Component({
   selector: 'app-agrega-organizacion-insert',
   standalone: true,
@@ -26,10 +24,9 @@ export class AgregaOrganizacionInsertComponent {
   resultado!: string;
   //variable array que almacena lov de tipo de organizaciones
   arrayTipoOrg: any[] = [];
+
   constructor(public dialogRef: MatDialogRef<AgregaOrganizacionInsertComponent>,
-    @Inject(MAT_DIALOG_DATA) public mensaje: string, private fb: FormBuilder, private http: AuthService) { }
-
-
+  @Inject(MAT_DIALOG_DATA) public mensaje: string, private fb: FormBuilder, private http: AuthService) { }
   formularioContacto = this.fb.group({
     nombre: ['', [Validators.required]],
     organizacion: ['', [Validators.required]],
@@ -40,8 +37,8 @@ export class AgregaOrganizacionInsertComponent {
       this.arrayTipoOrg = data;
     })
   }
-  submit() {
 
+  submit() {
     this.http.insertar_org(this.formularioContacto.value.nombre, this.formularioContacto.value.organizacion).subscribe((data: any) => {
       if (data.length > 0) {
         Swal.fire({
@@ -62,7 +59,6 @@ export class AgregaOrganizacionInsertComponent {
     })
 
     if (this.formularioContacto.valid) {
-
       this.resultado = "Todos los datos son válidos";
     }
     else {

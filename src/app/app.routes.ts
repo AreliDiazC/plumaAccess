@@ -1,11 +1,8 @@
-import { UsuarioComponent } from './modules/usuario/usuario.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
 import { ListUsuarioComponent } from './modules/list-usuario/list-usuario.component';
-import { SidebarComponent } from './modules/sidebar/sidebar.component';
 import { AdminDashboardComponent } from './modules/admin-dashboard/admin-dashboard.component';
-import { PlumaComponent } from './modules/pluma/pluma.component';
 import { TipoOrganizacionComponent } from './modules/tipo-organizacion/tipo-organizacion.component';
 import { ListPlumaComponent } from './modules/list-pluma/list-pluma.component';
 import { ListCodigoComponent } from './modules/list-codigo/list-codigo.component';
@@ -26,11 +23,9 @@ export const routes: Routes = [
             { path: 'listaOrganizacion', component: AgregarOrgComponent, canActivate: [AuthGuard]},
         ],
     }, 
+    { path: '**', redirectTo: 'login' }
 ];
-
-
 @NgModule({
-    //imports: [RouterModule.forRoot(routes)],
     imports: [RouterModule.forRoot(routes, {useHash: true})],
     exports: [RouterModule]
   })

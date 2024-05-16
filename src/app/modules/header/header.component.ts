@@ -3,7 +3,6 @@ import { AuthService } from '../../service/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SidebarService } from '../../service/sidebar.service';
 import {MatIconModule} from '@angular/material/icon';
-
 @Component({
   selector: 'app-header',
   standalone: true,
