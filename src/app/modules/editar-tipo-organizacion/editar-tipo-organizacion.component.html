@@ -1,0 +1,23 @@
+<div>
+    <div class="contenedor" mat-dialog-title>
+       <label style="color: white;">Tipo de organizacion</label>
+       <i class="fas fa-times" (click)="cerrarDialogo()"></i>
+    </div>
+    <div mat-dialog-content>
+       <br>
+       <form [formGroup]="formularioEditarTipoOrganizacion" (ngSubmit)="actualizaTipOrg()">
+   
+             <p>Ingresar nuevo tipo de organizacion:
+                <input type="text" formControlName="nombre_tipo_organizacion" required>
+                @if(this.formularioEditarTipoOrganizacion.get('nombre_tipo_organizacion')?.errors?.['required']) {
+                <span>(Requerido)</span>
+                }
+             </p>
+         
+       
+             <div class="but">
+               <button type="submit">Confirmar</button>
+            </div>
+       </form>
+    </div>
+ </div>

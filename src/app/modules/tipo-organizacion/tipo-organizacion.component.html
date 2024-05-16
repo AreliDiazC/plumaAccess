@@ -1,0 +1,30 @@
+<div class="container mt-4">
+   <div style="margin-top: 60px;">
+      <div class="row">
+         <div class="col">
+            <h2>Tipo de organizacion</h2>
+         </div>
+         <div class="col-auto">
+            <button class="btn btn-primary" (click)="insert_tipo_org()" ><i class="fas fa-plus"></i> Agregar tipo Organizacion</button>
+         </div>
+      </div>
+      <br><br>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nombre del tipo de la Organizacion</th>
+          </tr>
+        </thead>
+       <tbody>
+         @for (organizacion of tiposOrganizaciones; track organizacion){ 
+           <tr >
+             <td>{{ organizacion.nombre_tipo_organizacion }}</td>
+            
+             <td>
+               <i class="fas fa-pencil-alt" (click)="editar(organizacion)"></i>
+             </td>
+           </tr>
+         }
+         </tbody>
+      </table>
+   </div>
