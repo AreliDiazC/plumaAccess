@@ -28,20 +28,21 @@ export class CodigoComponent {
   tipoUsuario: any;
   plumas: any;
 
+
+
   constructor(public dialogRef: MatDialogRef<CodigoComponent>,
     @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb: FormBuilder, private toastr: ToastrService, private pluma: plumaService, private codigo: codigoService) {
      
       this.formularioPluma = this.fb.group({
-        codigo: ['', [Validators.required]],
+        codigo: [{ value: '', disabled: true }, Validators.required], // Establecer `disabled` a `true`
         idPluma: ['', [Validators.required]],
-        identificador: ['', [Validators.required]],
+        identificador: ['', [Validators.required]]
       });
     }
 
 
   ngOnInit(): void {
     this.verOrg();
-    
   }
 
   cerrarDialogo(){
@@ -54,8 +55,16 @@ export class CodigoComponent {
   })
 }
   
+generar(){
+  const codigoAleatorio = this.generarCodigoAleatorio();
+  this.formularioPluma.patchValue({
+    codigo: codigoAleatorio
+  });
+}
+
 submit() {
     if (this.formularioPluma.valid){
+      this.formularioPluma.get('codigo')?.enable();
       this.codigo.agregarCodigo(this.formularioPluma.value).subscribe({
         next: (respuesta) => {
           Swal.fire({
@@ -82,5 +91,28 @@ submit() {
       }); 
   }
 }
-  
+ 
+ generarCodigoAleatorio(): string {
+  const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const longitud = 20;
+
+  let codigo = '';
+
+  // Obtener la fecha actual
+  const fechaActual = new Date();
+  const dia = fechaActual.getDate().toString().padStart(2, '0');
+  const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+  const año = fechaActual.getFullYear().toString();
+
+  // Agregar la fecha al código
+  codigo += `${dia}${mes}${año}`;
+
+  // Generar caracteres aleatorios
+  for (let i = 0; i < longitud - 8; i++) {
+    const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
+    codigo += caracteres.charAt(indiceAleatorio);
+  }
+  return codigo;
+}
+
 }

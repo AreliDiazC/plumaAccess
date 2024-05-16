@@ -97,6 +97,7 @@ export class ListPlumaComponent implements OnInit{
       this.plumaS.mostrarPlumas(this.formulariOrg.value).subscribe((respuesta) =>{
         if(respuesta == null){
           this.currentPagePluma = [];
+          this.collectionSize = 0;
         }else{
           this.plumaOr = respuesta;
           this.collectionSize = this.plumaOr.length;

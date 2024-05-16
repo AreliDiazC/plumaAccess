@@ -33,7 +33,7 @@ export class ListUsuarioComponent implements OnInit{
   }
 
   verUsuario() {
-    this.usuario.verUsuarios(116).subscribe((respuesta) => {
+    this.usuario.verUsuarios().subscribe((respuesta) => {
       this.usuarios = respuesta;
       this.collectionSize = this.usuarios.length;
       this.refreshUsuario();
@@ -54,7 +54,7 @@ export class ListUsuarioComponent implements OnInit{
       disableClose: true, 
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.usuario.verUsuarios(116).subscribe((respuesta) => {
+      this.usuario.verUsuarios().subscribe((respuesta) => {
         this.usuarios = respuesta;
         this.collectionSize = this.usuarios.length;
         this.refreshUsuario();
@@ -70,7 +70,7 @@ export class ListUsuarioComponent implements OnInit{
       data: { usuario: usuario.id_user }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.usuario.verUsuarios(116).subscribe((respuesta) => {
+      this.usuario.verUsuarios().subscribe((respuesta) => {
         this.usuarios = respuesta;
         this.collectionSize = this.usuarios.length;
         this.refreshUsuario();

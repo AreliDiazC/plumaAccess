@@ -5,6 +5,7 @@ import { tap,map } from 'rxjs/operators';
 import { of, from  } from 'rxjs'; 
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
+import { UserResponse } from './usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -13,31 +14,26 @@ export class AuthService {
   //Servicio para la autentificacion
   //Trabajar con BehaviourSubjects
   public loggedIn = new BehaviorSubject<boolean>(false);
-  public role = new BehaviorSubject<string>('');
+
   usuarioRegistrado: any[] = [];
   idUsuario:number =0;
-  userRole: string = '';
-
-  isConnected: boolean = true;
-
   API: string = 'http://localhost/pluma/';
-
-  httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private router: Router, private clienteHttp: HttpClient) {
   }
 
   loginBS(data: any): Observable<any> {
     const url = `${this.API}ser_login.php`;
-
     const formData = new FormData();
     formData.append('nomUser', data.email);
     formData.append('pass', data.password);
-
-    return this.clienteHttp.post(url, formData)
-      .pipe(
-        catchError(this.handleError)
-      );
+  
+    return this.clienteHttp.post<any>(url, formData).pipe(
+      map(user => {
+        return user;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -53,59 +49,20 @@ export class AuthService {
   }
 
 
-
-  /*loginBS(data: any): Observable<any> {
-
-  const url = `${this.API}ser_login.php?`;
- 
-  return this.clienteHttp.request('POST', url, form)
-      .pipe(
-        catchError((err: any) => {
-          console.log("err", err);
-          if (err.status == 0) {
-            const errorMessage = err.error;
-            return throwError(() => errorMessage);
-            
-          } else if (err.status === 401) {
-            const errorMessage = err.error.message;
-            return throwError(() => errorMessage);
-          } else {
-            return throwError(() => 'Error desconocido');
-          }
-        })
-      );
-  }*/
-
- logoutBS(): void {
-  this.loggedIn.next(false);
-  this.role.next('');
+logoutBS(): void {
+  localStorage.setItem('loggedIn', 'false'); 
+  this.clearCurrentUser();
   this.router.navigate(['login'], { replaceUrl: true });
+}
+
+clearCurrentUser(): void {
+  localStorage.removeItem('codeqr');
+  localStorage.removeItem('id_org_update');
 }
 
 isLoggedInBS(): boolean {
   return this.loggedIn.getValue();
 }
-
-isAdmin(): boolean {
-  return this.role.getValue() === 'Administrador';
-}
-
-isRecepcion(): boolean {
-  return this.role.getValue() === 'Recepcionista';
-}
-
-isSupadmin():boolean {
-  return this.role.getValue() === 'SuperAdmin';
-}
-
-
-getRole(): string {
-  return this.role.getValue();
-}
-
-
-
-
 
 
 //servicios pantallas organizacion

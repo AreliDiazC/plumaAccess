@@ -5,9 +5,9 @@
     </div>
     <div mat-dialog-content>
        <br>
-       <form [formGroup]="formularioPluma" (ngSubmit)="actualizar()">
+       <form [formGroup]="formularioPluma" >
        <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <p>Codigo:
                 <input type="text" formControlName="codigo" required>
                 @if(this.formularioPluma.get('codigo')?.errors?.['required']) {
@@ -16,6 +16,10 @@
              </p>
 
         </div>
+        <div class="col-md-3" >
+         <button style="background-color: black;color: white; width: 100%;margin-top: 30px;padding: 5px;border-radius: 3px; border: 1px solid #ccc; box-sizing: border-box;" (click)="generar()"> Generar código</button>
+         </div>
+
           <div class="col-md-6">
             <p>Identificador QR:
                 <input type="text" formControlName="identificador" required>
@@ -26,21 +30,21 @@
             
           </div>
           <div class="col-md-6">
-             <p>Organización:
+             <p>Pluma:
                   <select  id="idPluma" formControlName="idPluma">
                      @for (pluma of plumas; track pluma){
                     <option [value]="pluma.id_pluma">{{ pluma.codigo_pluma }}</option>
                      }
                   </select>
                 @if(this.formularioPluma.get('idPluma')?.errors?.['required']) {
-                <span>(Organización requerida)</span>
+                <span>(Pluma requerida)</span>
                 }
              </p>
           </div>
        </div>
 
        <div class="but">
-          <button type="submit">Confirmar</button>
+          <button type="submit" (click)="actualizar()">Confirmar</button>
        </div>
        </form>
     </div>

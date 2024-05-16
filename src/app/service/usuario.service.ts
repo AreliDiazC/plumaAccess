@@ -12,10 +12,8 @@ API: string = 'http://localhost/pluma/';
 constructor(private clienteHttp: HttpClient) {
 }
 
-verUsuarios(id: any): Observable<any>{
-    const formData = new FormData();
-    formData.append('id_admin', id);
-    return this.clienteHttp.post(this.API+"ser_mostrar_user_por_admin.php", formData);
+verUsuarios(): Observable<any>{
+    return this.clienteHttp.get(this.API+"ser_mostrar_user_por_admin.php");
 }
 
 verUsuariosId(id: any): Observable<any>{
