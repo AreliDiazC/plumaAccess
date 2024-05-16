@@ -10,6 +10,7 @@ import { TipoOrganizacionComponent } from './modules/tipo-organizacion/tipo-orga
 import { ListPlumaComponent } from './modules/list-pluma/list-pluma.component';
 import { ListCodigoComponent } from './modules/list-codigo/list-codigo.component';
 import { AgregarOrgComponent } from './modules/agregar-org/agregar-org.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,11 +19,11 @@ export const routes: Routes = [
         path: '',
         component: AdminDashboardComponent,
         children: [
-            { path: 'listaUsuario', component: ListUsuarioComponent},
-            { path: 'listaPluma', component: ListPlumaComponent},
-            { path: 'tipoOrg', component: TipoOrganizacionComponent},
-            { path: 'listaCodigo', component: ListCodigoComponent}, 
-            { path: 'listaOrganizacion', component: AgregarOrgComponent},
+            { path: 'listaUsuario', component: ListUsuarioComponent, canActivate: [AuthGuard]},
+            { path: 'listaPluma', component: ListPlumaComponent, canActivate: [AuthGuard]},
+            { path: 'tipoOrg', component: TipoOrganizacionComponent, canActivate: [AuthGuard]},
+            { path: 'listaCodigo', component: ListCodigoComponent, canActivate: [AuthGuard]}, 
+            { path: 'listaOrganizacion', component: AgregarOrgComponent, canActivate: [AuthGuard]},
         ],
     }, 
 ];

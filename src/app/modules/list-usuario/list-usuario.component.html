@@ -14,6 +14,7 @@
            <tr>
              <th>Nombre</th>
              <th>Celular</th>
+             <th>Tipo de usuario</th>
              <th>Editar</th>
            </tr>
          </thead>
@@ -22,6 +23,7 @@
            <tr >
              <td>{{ usuario.nombre_completo }}</td>
              <td>{{ usuario.celular }}</td>
+             <td>{{ usuario.nombre_tipo_user }}</td>
              <td>
                <i class="fas fa-pencil-alt" (click)="editar(usuario)"></i>
              </td>

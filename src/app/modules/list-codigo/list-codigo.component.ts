@@ -16,6 +16,7 @@ import { codigoService } from '../../service/codigo.service';
 import { CodigoComponent } from '../codigo/codigo.component';
 import { EditarCodigoComponent } from '../editar-codigo/editar-codigo.component';
 import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { MostrarQrComponent } from '../mostrar-qr/mostrar-qr.component';
 
 @Component({
   selector: 'app-list-codigo',
@@ -57,6 +58,7 @@ export class ListCodigoComponent {
     this.codigoS.mostrarCodigo(this.formulariOrg.value).subscribe((respuesta) =>{
       if(respuesta == 201){
         this.currentPagePluma = [];
+        this.collectionSize = 0;
       }else{
         this.codigoOr = respuesta;
         this.collectionSize = this.codigoOr.length;
@@ -81,6 +83,16 @@ export class ListCodigoComponent {
     });
   
     dialogRef.afterClosed().subscribe(result => {
+      this.codigoS.mostrarCodigo(this.formulariOrg.value).subscribe((respuesta) =>{
+        if(respuesta == 201){
+          this.currentPagePluma = [];
+          this.collectionSize = 0;
+        }else{
+          this.codigoOr = respuesta;
+          this.collectionSize = this.codigoOr.length;
+          this.refreshPluma();
+        } 
+      })
     });
   }
 
@@ -92,9 +104,29 @@ export class ListCodigoComponent {
     });
   
     dialogRef.afterClosed().subscribe(result => {
+      this.codigoS.mostrarCodigo(this.formulariOrg.value).subscribe((respuesta) =>{
+        if(respuesta == 201){
+          this.currentPagePluma = [];
+          this.collectionSize = 0;
+        }else{
+          this.codigoOr = respuesta;
+          this.collectionSize = this.codigoOr.length;
+          this.refreshPluma();
+        } 
+      })
     });
   }
 
- 
+  mostrarQr(code: any) {
+    localStorage.setItem('codeqr', code);
+    const dialogRef = this.dialog.open(MostrarQrComponent, {
+      width: '30%',
+      height: '60%',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 
 }

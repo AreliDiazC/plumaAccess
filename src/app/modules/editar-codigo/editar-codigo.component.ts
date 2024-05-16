@@ -43,7 +43,7 @@ export class EditarCodigoComponent {
       });
 
       this.formularioPluma = this.fb.group({
-        codigo: ['', [Validators.required]],
+        codigo: [{ value: '', disabled: true }, Validators.required],
         idPluma: ['', [Validators.required]],
         identificador: ['', [Validators.required]],
         p_id_codigo: [this.data.codigo],
@@ -52,6 +52,7 @@ export class EditarCodigoComponent {
 
   actualizar(){
     if (this.formularioPluma.valid){
+      this.formularioPluma.get('codigo')?.enable();
       this.codigo.actualizarCodigo(this.formularioPluma.value).subscribe({
         next: (respuesta) => {
           Swal.fire({
@@ -93,6 +94,36 @@ export class EditarCodigoComponent {
     this.pluma.verPlumas().subscribe((respuesta) =>{
       this.plumas = respuesta;
     })
+  }
+
+  generar(){
+    const codigoAleatorio = this.generarCodigoAleatorio();
+    this.formularioPluma.patchValue({
+      codigo: codigoAleatorio
+    });
+  }
+
+  generarCodigoAleatorio(): string {
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const longitud = 20;
+  
+    let codigo = '';
+  
+    // Obtener la fecha actual
+    const fechaActual = new Date();
+    const dia = fechaActual.getDate().toString().padStart(2, '0');
+    const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+    const año = fechaActual.getFullYear().toString();
+  
+    // Agregar la fecha al código
+    codigo += `${dia}${mes}${año}`;
+  
+    // Generar caracteres aleatorios
+    for (let i = 0; i < longitud - 8; i++) {
+      const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
+      codigo += caracteres.charAt(indiceAleatorio);
+    }
+    return codigo;
   }
 
 }

@@ -6,10 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, HttpClientModule],
+  imports: [ReactiveFormsModule, HttpClientModule,CommonModule],
   providers: [AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -35,8 +37,14 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
-    
+    if (typeof localStorage !== 'undefined') {
+      const user = localStorage.getItem('loggedIn');
+      if (user === 'true') {
+        this.router.navigate(['/listaUsuario']);
+      }
+    }
   }
+  
 
   reloadPage(): void {
     window.location.reload();
@@ -45,13 +53,16 @@ export class LoginComponent {
   onSubmit(): void {
     this.auth.loginBS(this.loginForm.value).subscribe({
       next: data => {
-        console.log(data, "data");
         if(data == 0){
           this.toastr.error('Por favor, verifica las credenciales proporcionadas....', 'Error', {
             positionClass: 'toast-bottom-left',
           }); 
         }else{
-          this.router.navigate(['/listaUsuario']);
+          if (data && data.nombre_tipo_user === 'Administrador') {
+            this.auth.loggedIn.next(true);
+            localStorage.setItem('loggedIn', 'true'); 
+            this.router.navigate(['/listaUsuario']);
+          }
         }
       },
       error: (error: any) => {

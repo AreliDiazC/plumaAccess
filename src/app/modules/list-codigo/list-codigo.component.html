@@ -28,6 +28,7 @@
              <th>Codigo</th>
              <th>Organizacion</th>
              <th>Editar</th>
+             <th>Código QR</th>
            </tr>
          </thead>
          <tbody>
@@ -38,6 +39,9 @@
              <td>
                <i class="fas fa-pencil-alt" (click)="editar(codigo)"></i>
              </td>
+             <td>
+              <i class="fa-solid fa-eye" (click)="mostrarQr(codigo.codigo)"></i>
+            </td>
            </tr>
          }
          </tbody>

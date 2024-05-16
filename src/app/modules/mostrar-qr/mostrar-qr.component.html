@@ -1,0 +1,10 @@
+<div>
+  <div class="contenedor" mat-dialog-title>
+    <label style="color: white">Codigo Qr</label>
+    <i class="fas fa-times" (click)="cerrarDialogo()"></i>
+  </div>
+
+  <div id="cont" *ngIf="qrCodeUrl">
+    <img id="imagen" [src]="qrCodeUrl" alt="Código QR" />
+  </div>
+</div>
