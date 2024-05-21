@@ -24,7 +24,7 @@ export class LoginComponent {
     private router: Router
   ) { 
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -42,25 +42,37 @@ export class LoginComponent {
     window.location.reload();
   }
 
-  onSubmit(): void {
-    this.auth.loginBS(this.loginForm.value).subscribe({
-      next: data => {
-        if(data == 0){
-          this.toastr.error('Por favor, verifica las credenciales proporcionadas....', 'Error', {
-            positionClass: 'toast-bottom-left',
-          }); 
-        }else{
-          if (data && data.nombre_tipo_user === 'Administrador') {
-            this.auth.loggedIn.next(true);
-            localStorage.setItem('loggedIn', 'true'); 
-            this.router.navigate(['/listaUsuario']);
+  onSubmit(): void {  
+    if(this.loginForm.valid){
+      this.auth.loginBS(this.loginForm.value).subscribe({
+        next: data => {
+          if(data == 0){
+            this.toastr.error('Por favor, verifica las credenciales proporcionadas....', 'Error', {
+              positionClass: 'toast-bottom-left',
+            }); 
+          }else{
+            if (data && data.nombre_tipo_user === 'Administrador') {
+              this.auth.loggedIn.next(true);
+              localStorage.setItem('loggedIn', 'true'); 
+              this.router.navigate(['/listaUsuario']);
+            } else if (data.nombre_tipo_user !== 'Administrador'){
+              this.toastr.error('Acceso denagado....', 'Error', {
+                positionClass: 'toast-bottom-left',
+              }); 
+            }
           }
+        },
+        error: (error: any) => {
+          console.error('Error en la solicitud:', error);
+          console.error('Respuesta del servidor:', error.error);
         }
-      },
-      error: (error: any) => {
-        console.error('Error en la solicitud:', error);
-        console.error('Respuesta del servidor:', error.error);
-      }
-    });
+      });
+    }else {
+      this.toastr.error('Complete los campos requeridos....', 'Error', {
+        positionClass: 'toast-bottom-left',
+      }); 
+
+    }
+    
   }
 }
