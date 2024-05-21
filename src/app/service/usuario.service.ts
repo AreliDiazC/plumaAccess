@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 })
 export class usuarioService {
 
-API: string = 'http://localhost/pluma/';
+API: string = 'https://inmobiliaria.arvispace.com/Servicios_access_pluma/';
 
 constructor(private clienteHttp: HttpClient) {
 }

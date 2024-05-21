@@ -8,7 +8,7 @@ import { tap } from 'rxjs';
 })
 export class plumaService {
 
-API: string = 'http://localhost/pluma/';
+API: string = 'https://inmobiliaria.arvispace.com/Servicios_access_pluma/';
 
 constructor(private clienteHttp: HttpClient) {
 }

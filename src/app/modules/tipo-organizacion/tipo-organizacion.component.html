@@ -16,7 +16,7 @@
           </tr>
         </thead>
        <tbody>
-         @for (organizacion of tiposOrganizaciones; track organizacion){ 
+         @for (organizacion of currentPageTipo; track organizacion){ 
            <tr >
              <td>{{ organizacion.nombre_tipo_organizacion }}</td>
             
@@ -27,4 +27,12 @@
          }
          </tbody>
       </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination
+          [collectionSize]="collectionSize"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          (pageChange)="refreshTipo()">
+        </ngb-pagination>
+      </div>
    </div>
