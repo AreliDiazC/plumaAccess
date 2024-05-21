@@ -13,7 +13,7 @@ import {
 import { MatButtonModule} from '@angular/material/button';
 import { ToastrService } from 'ngx-toastr';
 import { organizacionService } from '../../service/organizacion.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-insert-tipo-org',
   standalone: true,
@@ -31,26 +31,38 @@ export class InsertTipoOrgComponent implements OnInit{
 
   constructor(public dialogRef: MatDialogRef<InsertTipoOrgComponent>,
     @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb: FormBuilder, private toastr: ToastrService, private organizacion: organizacionService ) {
-      
-      
       this.formularioTipoOrganizacion = this.fb.group({
         nombre_tipo_org: ['', [Validators.required]],
       });
     }
+
     ngOnInit(): void {
-      
-     
     }
+
     submit() {
       if (this.formularioTipoOrganizacion.valid){
-        this.organizacion.agregarTipoOrganizacion(this.formularioTipoOrganizacion.value).subscribe((respuesta)=>{
-          this.toastr.success('Usuario agregado correctamente', 'Exito', {
-            positionClass: 'toast-bottom-left',
-          }); 
-          this.dialogRef.close(true);
-        })
+        this.organizacion.agregarTipoOrganizacion(this.formularioTipoOrganizacion.value).subscribe({
+          next: (respuesta) => {
+            Swal.fire({
+              title: '¡Registro Exitoso!',
+              icon: 'success',
+              text: 'Datos ingresados exitosamente',
+              timer: 2000
+            });
+            this.dialogRef.close(true);
+          },
+          error: (err) => {
+            Swal.fire({
+              title: '¡Oops..!',
+              icon: 'error',
+              text: 'Hubo un error al querer registrar',
+              timer: 2000
+            });
+            this.dialogRef.close(true);
+          }
+        });
       }else{
-        this.toastr.warning('Complete los campos requeridos', 'Error', {
+        this.toastr.error('Complete los campos requeridos', 'Error', {
           positionClass: 'toast-bottom-left',
         }); 
       }
@@ -59,12 +71,4 @@ export class InsertTipoOrgComponent implements OnInit{
     cerrarDialogo(){
       this.dialogRef.close(true);
     }
-
-
-    
-
-  
-
-
-  
 }

@@ -17,7 +17,7 @@ export class AuthService {
 
   usuarioRegistrado: any[] = [];
   idUsuario:number =0;
-  API: string = 'http://localhost/pluma/';
+  API: string = 'https://inmobiliaria.arvispace.com/Servicios_access_pluma/';
 
   constructor(private router: Router, private clienteHttp: HttpClient) {
   }

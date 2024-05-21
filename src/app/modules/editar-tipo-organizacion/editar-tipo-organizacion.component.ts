@@ -13,8 +13,7 @@ import {
 import { MatButtonModule} from '@angular/material/button';
 import { ToastrService } from 'ngx-toastr';
 import { organizacionService } from '../../service/organizacion.service';
-
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-editar-tipo-organizacion',
   standalone: true,
@@ -45,19 +44,33 @@ export class EditarTipoOrganizacionComponent implements OnInit{
         p_id_tipo_organizacion: [this.data.organizacion],
       });
     }
+
     ngOnInit(): void { }
     
     actualizaTipOrg() {
-      if (this.formularioEditarTipoOrganizacion.valid)
-      {        console.log(this.formularioEditarTipoOrganizacion.value);
-
-        this.organizacion.actualizaTipOrg(this.formularioEditarTipoOrganizacion.value).subscribe((respuesta) =>{ console.log(respuesta)
-          this.toastr.success('Usuario actualizado correctamente', 'Exito', {
-            positionClass: 'toast-bottom-left',
-          }); 
+      if (this.formularioEditarTipoOrganizacion.valid){     
+        this.organizacion.actualizaTipOrg(this.formularioEditarTipoOrganizacion.value).subscribe({
+        next: (respuesta) => {
+          Swal.fire({
+            title: '¡Registro actualizado con exito!',
+            icon: 'success',
+            text: 'Datos ingresados exitosamente',
+            timer: 2000
+          });
           this.dialogRef.close(true);
-        })
-      }else{
+        },
+        error: (err) => {
+          Swal.fire({
+            title: '¡Oops..!',
+            icon: 'error',
+            text: 'Hubo un error al querer registrar',
+            timer: 2000
+          });
+          this.dialogRef.close(true);
+        }
+      });
+    }
+    else{
         this.toastr.warning('Complete los campos requeridos', 'Error', {
           positionClass: 'toast-bottom-left',
         }); 
@@ -68,6 +81,4 @@ export class EditarTipoOrganizacionComponent implements OnInit{
     cerrarDialogo(){
       this.dialogRef.close(true);
     }
-
-
 }

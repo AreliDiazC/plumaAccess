@@ -6,26 +6,25 @@ import { MatIcon } from '@angular/material/icon';
 import { InsertTipoOrgComponent } from '../insert-tipo-org/insert-tipo-org.component';
 import { organizacionService } from '../../service/organizacion.service';
 import { EditarTipoOrganizacionComponent } from '../editar-tipo-organizacion/editar-tipo-organizacion.component';
-
-
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-tipo-organizacion',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, PaginationModule, MatIcon],
+  imports: [MatButtonModule, MatDialogModule, PaginationModule, MatIcon,NgbPaginationModule],
   templateUrl: './tipo-organizacion.component.html',
   styleUrl: './tipo-organizacion.component.css'
 })
 export class TipoOrganizacionComponent implements OnInit{
 
   tiposOrganizaciones: any;
-
-
+  page = 1;
+	pageSize = 4;
+  collectionSize = 0;
+  currentPageTipo: any[] = [];
   
   constructor(
     public dialog: MatDialog, 
     private organizacion: organizacionService
-
-   
   ) {
    }
     
@@ -33,24 +32,20 @@ export class TipoOrganizacionComponent implements OnInit{
     this.verOrganizacion();
   }
 
-  cerrarDialogo(){
-    // this.dialogRef.close(true);
-   }
- 
-   submit() {
-     /*if (this.formularioContacto.valid){
-       this.usuario.agregarUsuario(this.formularioContacto.value).subscribe((respuesta)=>{
-         this.toastr.success('Usuario agregado correctamente', 'Exito', {
-           positionClass: 'toast-bottom-left',
-         }); 
-         this.dialogRef.close(true);
-       })
-     }else{
-       this.toastr.warning('Complete los campos requeridos', 'Error', {
-         positionClass: 'toast-bottom-left',
-       }); 
-     }*/
-   }
+   verOrganizacion() {
+    this.organizacion.tiposOrganizaciones().subscribe((respuesta) => {
+      this.tiposOrganizaciones = respuesta;
+      this.collectionSize = this.tiposOrganizaciones.length;
+      this.refreshTipo();
+    });
+  }
+
+   refreshTipo() {
+		this.currentPageTipo = this.tiposOrganizaciones.map((country: any, i:any) => ({ id: i + 1, ...country })).slice(
+			(this.page - 1) * this.pageSize,
+			(this.page - 1) * this.pageSize + this.pageSize,
+		);
+	}
 
    insert_tipo_org() {
     const dialogRef = this.dialog.open(InsertTipoOrgComponent, {
@@ -60,12 +55,9 @@ export class TipoOrganizacionComponent implements OnInit{
     });
   
     dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-  verOrganizacion() {
-    this.organizacion.tiposOrganizaciones().subscribe((respuesta) => {
-      this.tiposOrganizaciones = respuesta;
+      this.organizacion.tiposOrganizaciones().subscribe((respuesta) => {
+        this.tiposOrganizaciones = respuesta;
+      });
     });
   }
 
@@ -77,7 +69,9 @@ export class TipoOrganizacionComponent implements OnInit{
       data: { organizacion: organizacion.id_tipo_organizacion }
     });
     dialogRef.afterClosed().subscribe(result => {
-      // Aquí puedes manejar cualquier resultado que recibas después de que se cierre el diálogo
+      this.organizacion.tiposOrganizaciones().subscribe((respuesta) => {
+        this.tiposOrganizaciones = respuesta;
+      });
     });
   }
 
